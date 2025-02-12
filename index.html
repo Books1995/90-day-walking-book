@@ -211,37 +211,51 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById("orderForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => { data[key] = value; });
-            
-            fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert("Поръчката е изпратена успешно!");
-                window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
-            })
-            .catch(error => {
-                alert("Възникна грешка при изпращането на поръчката.");
-                console.error("Error:", error);
-            });
-        });
-    </script>
-
 <script>
-    document.getElementById("OrderButton").addEventListener("click", function() {
-        window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
+    document.addEventListener("DOMContentLoaded", function() {
+        const orderForm = document.getElementById("orderForm");
+        if (orderForm) {
+            orderForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = {};
+                formData.forEach((value, key) => { data[key] = value; });
+
+                fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.result === "success") { // Ensure successful submission
+                        alert("Поръчката е изпратена успешно!");
+                        window.location.href = "https://www.nepipai.com/order_confirmation.html"; // ✅ Redirect on success
+                    } else {
+                        throw new Error("Неуспешно изпращане. Опитайте отново.");
+                    }
+                })
+                .catch(error => {
+                    alert("Възникна грешка при изпращането на поръчката. Моля, опитайте отново.");
+                    console.error("Error:", error);
+                });
+            });
+        } else {
+            console.error("Form with ID 'orderForm' not found.");
+        }
+
+        // Fix for the "Поръчай сега" Button Click (Scroll Instead of Redirect)
+        const orderButton = document.getElementById("orderButton");
+        if (orderButton) {
+            orderButton.addEventListener("click", function() {
+                scrollToBottom(); // Scroll to form instead of redirecting immediately
+            });
+        } else {
+            console.error("Button with ID 'orderButton' not found.");
+        }
     });
 </script>
-        </form>
-    </div>
+        
 </body>
 </html>
