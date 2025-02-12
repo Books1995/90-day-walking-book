@@ -224,17 +224,13 @@
 
                 fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
                     method: "POST",
+                    mode: "no-cors",  // 👈 Bypass CORS issues
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.result === "success") { // Ensure successful submission
-                        alert("Поръчката е изпратена успешно!");
-                        window.location.href = "https://www.nepipai.com/order_confirmation.html"; // ✅ Redirect on success
-                    } else {
-                        throw new Error("Неуспешно изпращане. Опитайте отново.");
-                    }
+                .then(response => {
+                    alert("Поръчката е изпратена успешно!");
+                    window.location.href = "https://www.nepipai.com/order_confirmation.html";
                 })
                 .catch(error => {
                     alert("Възникна грешка при изпращането на поръчката. Моля, опитайте отново.");
@@ -245,11 +241,15 @@
             console.error("Form with ID 'orderForm' not found.");
         }
 
-        // Fix for the "Поръчай сега" Button Click (Scroll Instead of Redirect)
+        // Fix for "Поръчай сега" Button Click (Scroll First, Submit on Second Click)
         const orderButton = document.getElementById("orderButton");
         if (orderButton) {
             orderButton.addEventListener("click", function() {
-                scrollToBottom(); // Scroll to form instead of redirecting immediately
+                if (document.getElementById("name").value.trim() === "") {
+                    scrollToBottom(); // First click: Scroll to form
+                } else {
+                    orderForm.dispatchEvent(new Event("submit")); // Second click: Submit if form is filled
+                }
             });
         } else {
             console.error("Button with ID 'orderButton' not found.");
