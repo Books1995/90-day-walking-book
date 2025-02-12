@@ -174,68 +174,71 @@
         <h2 class="testimonials">⭐️⭐️⭐️⭐️⭐️ „Започнах с 10,000 крачки на ден и животът ми се промени! Чувствам се по-енергична и по-здрава.“ - Мария Г.</h2>
         
         <p><strong>🎁 Бонуси при поръчка сега:</strong></p>
-        <p>✅ <strong>Безплатен</strong> чеклист за проследяване на напредъка!
         <p>✅ <strong>Безплатен</strong> чеклист за проследяване на напредъка!</p>
 
-        <form>
-            <div class="form-group">
-                <label for="name">Моля, напишете вашето Име и Имейл отговор:</label>
-                <input type="text" id="name" name="name" placeholder="Име и Фамилия" required>
-                <input type="email" id="email" name="email" placeholder="Email Адрес" required>
-            </div>
-            <div class="form-group">
-                <label for="contact">Моля, напишете Телефон, Адрес и Град за Доставка:</label>
-                <input type="text" id="phone" name="phone" placeholder="Телефонен номер" required>
-                <input type="text" id="address" name="address" placeholder="Адрес за доставка или ИМЕ на ОФИС на СПИДИ" required>
-                <input type="text" id="city" name="city" placeholder="Град" required>
-            </div>
-            <div class="form-group">
-                <label>Изберете Метод за Доставка:</label>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="delivery_method" value="office" checked>
-                        Доставка до ОФИС на СПИДИ (4.90лв)
-                    </label>
-                    <label>
-                        <input type="radio" name="delivery_method" value="address">
-                        Доставка до Ваш АДРЕС (5.90лв)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Изберете Метод за Плащане:</label>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="payment_method" value="cash" checked>
-                        Наложен платеж
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Вземи втора книга с -50% само за 14.99лв:</label>
-                <div class="radio-group">
-                    <label>
-                        <input type="checkbox" name="add_gift" value="yes">
-                        Направи Подарък на Приятел
-                    </label>
-                </div>
-            </div>
-            <div class="order-summary">
-                <h3>Информация за поръчка</h3>
-                <div class="summary-item">
-                    <span>Междинна сума:</span>
-                    <span>29.99лв</span>
-                </div>
-                <div class="summary-item">
-                    <span>Доставка:</span>
-                    <span>4.90лв</span>
-                </div>
-                <div class="summary-item total">
-                    <span>Общо:</span>
-                    <span>34,89лв</span>
-                </div>
-            </div>
-            <button type="submit" class="submit-btn">ПОРЪЧАЙ СЕГА ЗА 29,99 ЛВ.</button>
+<form>
+    <div class="form-group">
+        <label for="name">Име и Фамилия:</label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+
+        <label for="email">Email Адрес:</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Телефонен номер:</label>
+        <input type="text" id="phone" name="phone" required autocomplete="tel">
+
+        <label for="address">Адрес за доставка:</label>
+        <input type="text" id="address" name="address" required autocomplete="street-address">
+
+        <label for="city">Град:</label>
+        <input type="text" id="city" name="city" required autocomplete="address-level2">
+    </div>
+
+    <fieldset>
+        <legend>Изберете Метод за Доставка:</legend>
+        <label for="delivery-office">
+            <input type="radio" id="delivery-office" name="delivery_method" value="office" checked>
+            Доставка до ОФИС на СПИДИ (4.90лв)
+        </label>
+        <label for="delivery-address">
+            <input type="radio" id="delivery-address" name="delivery_method" value="address">
+            Доставка до Ваш АДРЕС (5.90лв)
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Изберете Метод за Плащане:</legend>
+        <label for="payment-cash">
+            <input type="radio" id="payment-cash" name="payment_method" value="cash" checked>
+            Наложен платеж
+        </label>
+    </fieldset>
+
+    <label for="gift">
+        <input type="checkbox" id="gift" name="add_gift" value="yes">
+        Направи Подарък на Приятел
+    </label>
+
+    <div class="order-summary">
+        <h3>Информация за поръчка</h3>
+        <div class="summary-item">
+            <span>Междинна сума:</span>
+            <span>29.99лв</span>
+        </div>
+        <div class="summary-item">
+            <span>Доставка:</span>
+            <span>4.90лв</span>
+        </div>
+        <div class="summary-item total">
+            <span>Общо:</span>
+            <span>34,89лв</span>
+        </div>
+    </div>
+
+    <button type="submit" class="submit-btn">ПОРЪЧАЙ СЕГА ЗА 29,99 ЛВ.</button>
+</form>
 
            <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -264,9 +267,25 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("📤 Sending Data:", formData); // Log form data for debugging
 
         fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData)
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error("⚠️ Грешка при изпращането на данните!");
+    }
+    return response.text();
+})
+.then(data => {
+    console.log("✅ Google Sheets Response:", data);
+    alert("🎉 Поръчката ви е изпратена успешно!");
+    window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
+})
+.catch(error => {
+    console.error("❌ Error:", error);
+    alert("⚠️ Възникна грешка! Моля, опитайте отново.");
+});
         })
         .then(response => response.text())
         .then(data => {
@@ -281,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-        </form>
     </div>
 </body>
 </html>
