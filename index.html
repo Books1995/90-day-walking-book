@@ -238,32 +238,38 @@
            <button type="button" class="submit-btn" id="OrderButton">ПОРЪЧАЙ СЕГА ЗА 29,99 ЛВ.</button>
 
            <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent default form submission
+document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-        let formData = {
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            phone: document.getElementById("phone").value,
-            address: document.getElementById("address").value,
-            city: document.getElementById("city").value,
-            delivery_method: document.querySelector('input[name="delivery_method"]:checked').value,
-            payment_method: document.querySelector('input[name="payment_method"]:checked').value
-        };
+    let formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        delivery_method: document.querySelector('input[name="delivery_method"]:checked')?.value || "Not selected",
+        payment_method: document.querySelector('input[name="payment_method"]:checked')?.value || "Not selected"
+    };
 
-        fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log("Success:", data);
-            alert("Поръчката ви е изпратена успешно!");
-            window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
-        })
-        .catch(error => console.error("Error:", error));
+    console.log("📤 Sending Data:", formData); // Log form data in browser console
+
+    fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("✅ Google Sheets Response:", data);
+        alert("Поръчката ви е изпратена успешно!");
+        window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
+    })
+    .catch(error => {
+        console.error("❌ Error:", error);
+        alert("Грешка при изпращане на формата!");
     });
+});
+
 </script>
 
 <script>
