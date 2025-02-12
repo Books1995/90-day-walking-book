@@ -267,38 +267,27 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("📤 Sending Data:", formData); // Log form data for debugging
 
         fetch("https://script.google.com/macros/s/AKfycbzxmd5TFqJE5cXwgUSO1XdNZVKsRg-ud6hrMFEL8MArmEvEFJ2Gpa9-KSvgv0Ser0KV/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData)
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error("⚠️ Грешка при изпращането на данните!");
-    }
-    return response.text();
-})
-.then(data => {
-    console.log("✅ Google Sheets Response:", data);
-    alert("🎉 Поръчката ви е изпратена успешно!");
-    window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
-})
-.catch(error => {
-    console.error("❌ Error:", error);
-    alert("⚠️ Възникна грешка! Моля, опитайте отново.");
-});
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
         })
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("⚠️ Грешка при изпращането на данните!");
+            }
+            return response.text();
+        })
         .then(data => {
             console.log("✅ Google Sheets Response:", data);
-            alert("Поръчката ви е изпратена успешно!");
+            alert("🎉 Поръчката ви е изпратена успешно!");
             window.location.href = "https://books1995.github.io/90-day-walking-book/order_confirmation.html";
         })
         .catch(error => {
             console.error("❌ Error:", error);
-            alert("Грешка при изпращане на формата!");
+            alert("⚠️ Възникна грешка! Моля, опитайте отново.");
         });
-    });
-});
+    }); // ✅ Correctly closed form event listener
+}); // ✅ Correctly closed DOMContentLoaded function
 </script>
     </div>
 </body>
